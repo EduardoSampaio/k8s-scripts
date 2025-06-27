@@ -1,0 +1,72 @@
+--kind
+kubectl get nodes
+kubectl label node meu-cluster-control-plane ingress-ready=true
+
+| Comando                                     | Descrição                                                           |
+| ------------------------------------------- | ------------------------------------------------------------------- |
+| `kind create cluster`                       | Cria um cluster padrão com o nome `kind`                            |
+| `kind create cluster --name NOME`           | Cria cluster com nome customizado                                   |
+| `kind create cluster --config=arquivo.yaml` | Cria cluster com configuração customizada (ex: nodes, ingress, etc) |
+
+| Comando                                    | Descrição                                     |
+| ------------------------------------------ | --------------------------------------------- |
+| `kind get clusters`                        | Lista todos os clusters criados com kind      |
+| `kubectl cluster-info --context kind-NOME` | Mostra informações do cluster (via `kubectl`) |
+| `kubectl config use-context kind-NOME`     | Define o contexto para o cluster do kind      |
+
+| Comando                           | Descrição                                 |
+| --------------------------------- | ----------------------------------------- |
+| `kind delete cluster`             | Remove o cluster com nome padrão (`kind`) |
+| `kind delete cluster --name NOME` | Remove cluster com nome específico        |
+
+
+| Comando                               | Descrição                                                    |
+| ------------------------------------- | ------------------------------------------------------------ |
+| `kubectl config current-context`      | Mostra o contexto atual                                      |
+| `kubectl config get-contexts`         | Lista todos os contextos disponíveis                         |
+| `kubectl config use-context CONTEXTO` | Troca para outro contexto                                    |
+| `kubectl version --short`             | Mostra a versão do cliente e do servidor                     |
+| `kubectl api-resources`               | Lista os tipos de recursos disponíveis (ex: Pod, Deployment) |
+
+
+| Comando                                                      | Descrição                             |
+| ------------------------------------------------------------ | ------------------------------------- |
+| `kubectl get pods -n NAMESPACE`                              | Lista pods de um namespace específico |
+| `kubectl config set-context --current --namespace=NAMESPACE` | Define o namespace padrão             |
+| `kubectl get ns`                                             | Lista todos os namespaces             |
+
+
+| Ação                   | Comando                                          |
+| ---------------------- | ------------------------------------------------ |
+| Criar cluster padrão   | `kind create cluster`                            |
+| Criar cluster nomeado  | `kind create cluster --name dev`                 |
+| Criar cluster via YAML | `kind create cluster --config=meu-config.yaml`   |
+| Listar clusters        | `kind get clusters`                              |
+| Deletar cluster        | `kind delete cluster --name dev`                 |
+| Usar contexto          | `kubectl config use-context kind-dev`            |
+| Adicionar imagem       | `kind load docker-image minha-img:v1 --name dev` |
+
+
+| Comando                                   | Descrição                           |
+| ----------------------------------------- | ----------------------------------- |
+| `kubectl rollout status deployment NOME`  | Mostra o status da atualização      |
+| `kubectl rollout history deployment NOME` | Lista as revisões (histórico)       |
+| `kubectl rollout undo deployment NOME`    | Faz rollback para a versão anterior |
+
+
+| Comando                                              | Descrição                                      |
+| ---------------------------------------------------- | ---------------------------------------------- |
+| `kubectl apply -f arquivo.yaml`                      | Aplica/cria recursos a partir de um arquivo    |
+| `kubectl create -f arquivo.yaml`                     | Cria recursos (sem atualizar se já existir)    |
+| `kubectl delete -f arquivo.yaml`                     | Remove os recursos definidos no YAML           |
+| `kubectl edit deployment NOME`                       | Edita o deployment diretamente (abre o editor) |
+| `kubectl set image deployment NOME container=imagem` | Atualiza imagem de container em tempo real     |
+
+
+| Comando                   | Descrição                                                               |
+| ------------------------- | ----------------------------------------------------------------------- |
+| `kubectl get all`         | Lista todos os recursos (pods, svc, deployments etc) no namespace atual |
+| `kubectl get pods`        | Lista os pods                                                           |
+| `kubectl get svc`         | Lista os serviços                                                       |
+| `kubectl get nodes`       | Lista os nodes do cluster                                               |
+| `kubectl get deployments` | Lista os deployments                                                    |

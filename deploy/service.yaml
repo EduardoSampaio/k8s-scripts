@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: development
+  name: webserver-service
+  labels:
+    name: webserver-service
+spec:
+  selector:
+    app: webserver
+  type: ClusterIP
+  ports:
+    - port: 8080           # Porta interna do Service
+      targetPort: 80       # Porta no Pod (container)
+      #nodePort: 30080      # valor entre 30000–32767
+      protocol: TCP
