@@ -52,7 +52,7 @@ kubectl label node meu-cluster-control-plane ingress-ready=true
 | `kubectl rollout status deployment NOME`  | Mostra o status da atualização      |
 | `kubectl rollout history deployment NOME` | Lista as revisões (histórico)       |
 | `kubectl rollout undo deployment NOME`    | Faz rollback para a versão anterior |
-
+   kubectl rollout undo deployment <deployment> --to-revision=
 
 | Comando                                              | Descrição                                      |
 | ---------------------------------------------------- | ---------------------------------------------- |

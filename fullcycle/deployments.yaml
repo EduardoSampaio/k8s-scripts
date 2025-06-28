@@ -4,6 +4,8 @@ metadata:
   name: goserver
   labels:
     app: goserver
+  annotations:
+    kubernetes.io/change-cause: kubectl apply --record ...
 spec:
   replicas: 1
   selector:
@@ -16,8 +18,17 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: yamidudu/hello.go:latest
+          image: yamidudu/hello.go:v4
           imagePullPolicy: Always
+          # env:
+          #   - name: NAME
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: goserver-env
+          #         key: name
+          envFrom:
+            - configMapRef:
+                name: goserver-env
           ports:
             - containerPort: 80
           resources:
