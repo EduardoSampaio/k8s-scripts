@@ -170,14 +170,31 @@ spec:
                   number: 80
 ```
 
----
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minha-aplicacao-secret
+type: Opaque
+data:
+  USUARIO: dXN1YXJpby1leGVtcGxv  # Base64 de "usuario-exemplo"
+  SENHA: c2VuaGEtc2VjcmV0        # Base64 de "senha-secret"
 
-**Dica:** para usar `goserver.local`, adicione no seu `/etc/hosts`:
-
-```bash
-127.0.0.1 goserver.local
 ```
 
----
+```yaml
+#no deployment
+env:
+  - name: USUARIO
+    valueFrom:
+      secretKeyRef:
+        name: minha-aplicacao-secret
+        key: USUARIO
+  - name: SENHA
+    valueFrom:
+      secretKeyRef:
+        name: minha-aplicacao-secret
+        key: SENHA
 
-**Pronto!** Agora você tem um guia completo para usar Kubernetes com Kind.
+```
+
