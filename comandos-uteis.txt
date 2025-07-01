@@ -70,3 +70,6 @@ kubectl label node meu-cluster-control-plane ingress-ready=true
 | `kubectl get svc`         | Lista os serviços                                                       |
 | `kubectl get nodes`       | Lista os nodes do cluster                                               |
 | `kubectl get deployments` | Lista os deployments                                                    |
+
+
+kubectl patch deployment metrics-server -n kube-system --type=json -p="[ { `"op`": `"add`", `"path`": `"/spec/template/spec/containers/0/args/-`", `"value`": `"--kubelet-insecure-tls`" } ]"

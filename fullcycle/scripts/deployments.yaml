@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goserver
+  labels:
+    app: goserver
+  annotations:
+    kubernetes.io/change-cause: kubectl apply --record ...
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goserver
+  template:
+    metadata:
+      labels:
+        app: goserver
+    spec:
+      containers:
+        - name: goserver
+          image: yamidudu/hello.go:v6
+          imagePullPolicy: Always
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 80
+            periodSeconds: 3
+            failureThreshold: 30
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            periodSeconds: 5 # periodo para verificação
+            failureThreshold: 1 # quantas vezes pode falhar
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            periodSeconds: 5 # periodo para verificação
+            failureThreshold: 1 # quantas vezes pode falhar
+            timeoutSeconds: 1 # tempo para o timeout
+            successThreshold: 1 # quantas vezes tem que testar para dar ok      
+          envFrom:
+            - configMapRef:
+                name: goserver-env
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config
+              mountPath: /app/myfamily
+            - name: goserver-pvc
+              mountPath: /app/data
+          resources:
+            limits:
+              cpu: "100m"
+              memory: 100Mi
+            requests:
+              cpu: "100m"
+              memory: 100Mi
+      volumes:
+        - name: goserver-pvc
+          persistentVolumeClaim:
+            claimName: goserver-pvc
+        - name: config
+          configMap:
+            name: configmap-family
+            items:
+              - key: MY_FAMILY
+                path: family.txt
